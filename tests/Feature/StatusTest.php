@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\ArchivedStatus;
 use App\Models\Status;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -95,5 +96,20 @@ class StatusTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonFragment(['deleted_at' => null]);
         $this->assertCount(1, Status::all());
+    }
+
+    public function test_permanently_delete_and_move_to_status_archive()
+    {
+        $pending_status = Status::factory()->create(['status_code' => 'Pendeng']);
+        $this->assertCount(1, Status::all());
+
+        $pending_status->delete();
+        $this->assertCount(0, Status::all());
+        
+        $response = $this->deleteJson('/api/status/permanent/delete/' . $pending_status->id);
+        
+        $this->assertCount(0, Status::withTrashed()->get());
+
+        $this->assertCount(1, ArchivedStatus::withTrashed()->get());
     }
 }

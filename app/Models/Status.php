@@ -12,7 +12,9 @@ class Status extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'status';
-    protected $fillable = ['status_code'];
+    protected $fillable = ['id', 'status_code', 'created_at', 'updated_at', 'deleted_at'];
+    
+    public $incrementing = true;
 
     public function task(): HasOne
     {

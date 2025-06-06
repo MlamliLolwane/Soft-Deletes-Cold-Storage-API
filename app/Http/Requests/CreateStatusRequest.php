@@ -23,6 +23,9 @@ class CreateStatusRequest extends FormRequest
     {
         return [
             'status_code' => 'required|string|in:Pending,Complete,Cancelled',
+            'created_at' => 'date',
+            'updated_at' => 'date',
+            'deleted_at' => 'date'
         ];
     }
 }

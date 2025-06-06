@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateStatusRequest;
 use App\Http\Requests\UpdateStatusRequest;
 use App\Models\Status;
+use App\Traits\HandlesStatusCreation;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class StatusController extends Controller
 {
+    use HandlesStatusCreation;
     /**
      * Display a listing of the resource.
      */
@@ -24,7 +27,7 @@ class StatusController extends Controller
      */
     public function store(CreateStatusRequest $request)
     {
-        $status = Status::create($request->validated());
+        $status = $this->createStatus($request->validated());
 
         return response()->json($status, 201);
     }
@@ -63,6 +66,7 @@ class StatusController extends Controller
         return response('Status deleted successfully', 204);
     }
 
+    //Restore from bin to main records
     public function restore(string $id)
     {
         $status = Status::onlyTrashed()->where('id', $id)->firstOrFail();
@@ -70,5 +74,27 @@ class StatusController extends Controller
         $status->restore();
 
         return response()->json($status, 200);
+    }
+
+    //Permanently delete from status table and move to archived_status
+    public function permanently_delete(string $id): JsonResponse
+    {
+        $deleted_status = Status::onlyTrashed()->where('id', $id)->firstOrFail();
+
+        //Insert status details into archived_status table
+        $data = [
+            'id' => $deleted_status->id,
+            'status_code' => $deleted_status->status_code,
+            'created_at' => $deleted_status->created_at,
+            'updated_at' => $deleted_status->updated_at,
+            'deleted_at' => $deleted_status->deleted_at
+        ];
+
+        $this->createArchivedStatus($data);
+
+        $deleted_status->forceDelete();
+
+        return response()->json(['message' => 'Record moved to archives. It will remain for n amount of time
+        before being permanently deleted'], 204);
     }
 }
