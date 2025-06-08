@@ -13,7 +13,18 @@ class Task extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['task_definition', 'status_id', 'user_id'];
+    protected $fillable = [
+        'id',
+        'task_definition',
+        'status_id',
+        'user_id',
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
+    public $incrementing = true;
+
 
     public function status(): BelongsTo
     {

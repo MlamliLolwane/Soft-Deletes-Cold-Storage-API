@@ -7,9 +7,11 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Traits\HandleTaskCreation;
 
 class TaskController extends Controller
 {
+    use HandleTaskCreation;
     /**
      * Display a listing of the resource.
      */
@@ -58,7 +60,7 @@ class TaskController extends Controller
     public function destroy(string $id): JsonResponse
     {
         $task = Task::findOrFail($id);
-        
+
         $task->delete();
 
         return response()->json(['message' => 'Status deleted successfully'], 204);
@@ -71,5 +73,26 @@ class TaskController extends Controller
         $deleted_task->restore();
 
         return response()->json($deleted_task, 200);
+    }
+
+    public function permanently_delete(string $id): JsonResponse
+    {
+        $deleted_task = Task::withTrashed()->where('id', $id)->firstOrFail();
+
+        $data = [
+            'id' => $deleted_task->id,
+            'task_definition' => $deleted_task->task_definition,
+            'status_id' => $deleted_task->status_id,
+            'user_id' => $deleted_task->user_id,
+            'created_at' => $deleted_task->created_at,
+            'updated_at' => $deleted_task->updated_at,
+            'deleted_at' => $deleted_task->deleted_at,
+        ];
+
+        $this->createArchivedTask($data);
+
+        $deleted_task->forceDelete();
+
+        return response()->json(['message' => 'Status permanently deleted'], 204);
     }
 }

@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('archived_tasks', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id');
             $table->string('task_definition', 250);
             $table->unsignedBigInteger('status_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
