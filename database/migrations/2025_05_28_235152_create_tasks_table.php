@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->string('task_title', 50);
             $table->string('task_definition', 250);
             $table->unsignedBigInteger('status_id');
             $table->unsignedBigInteger('user_id');

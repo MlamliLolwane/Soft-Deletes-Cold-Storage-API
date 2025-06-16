@@ -81,6 +81,7 @@ class TaskController extends Controller
 
         $data = [
             'id' => $deleted_task->id,
+            'task_title' => $deleted_task->task_title,
             'task_definition' => $deleted_task->task_definition,
             'status_id' => $deleted_task->status_id,
             'user_id' => $deleted_task->user_id,
