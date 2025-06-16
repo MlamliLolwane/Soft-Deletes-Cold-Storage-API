@@ -54,6 +54,7 @@ class ArchivedTaskController extends Controller
 
         $data = [
             'id' => $task->id, 
+            'task_title' => $task->task_title, 
             'task_definition' => $task->task_definition, 
             'status_id' => $task->status_id, 
             'user_id' => $task->user_id, 

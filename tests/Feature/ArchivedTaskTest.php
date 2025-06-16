@@ -20,6 +20,7 @@ class ArchivedTaskTest extends TestCase
         $status = Status::factory()->create();
 
         $task = Task::factory()->create([
+            'task_title' => 'Title',
             'task_definition' => 'Do homework',
             'status_id' => $status->id,
             'user_id' => $user->id
@@ -40,12 +41,14 @@ class ArchivedTaskTest extends TestCase
         $status = Status::factory()->create();
 
         $first_task = Task::factory()->create([
+            'task_title' => 'Title',
             'task_definition' => 'Do homework',
             'status_id' => $status->id,
             'user_id' => $user->id
         ]);
 
         $second_task = Task::factory()->create([
+            'task_title' => 'Title',
             'task_definition' => 'Go to town',
             'status_id' => $status->id,
             'user_id' => $user->id
@@ -72,6 +75,7 @@ class ArchivedTaskTest extends TestCase
         $status = Status::factory()->create();
 
         $task = Task::factory()->create([
+            'task_title' => 'Title',
             'task_definition' => 'Do homework',
             'status_id' => $status->id,
             'user_id' => $user->id

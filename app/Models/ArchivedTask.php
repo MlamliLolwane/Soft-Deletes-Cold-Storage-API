@@ -12,5 +12,5 @@ class ArchivedTask extends Model
     
     public $table = 'archived_tasks';
 
-    public $fillable = ['id', 'task_definition', 'status_id', 'user_id', 'created_at', 'updated_at', 'deleted_at'];
+    public $fillable = ['id', 'task_title', 'task_definition', 'status_id', 'user_id', 'created_at', 'updated_at', 'deleted_at'];
 }

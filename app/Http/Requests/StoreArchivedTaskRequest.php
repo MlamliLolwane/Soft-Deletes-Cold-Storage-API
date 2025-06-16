@@ -22,8 +22,9 @@ class StoreArchivedTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' = 'required|integer|min:1', 
-            'task_definition' => 'required|string', 
+            'id' => 'required|integer|min:1', 
+            'task_title' => 'required|string|max:50', 
+            'task_definition' => 'required|string|max:250', 
             'status_id' => 'required|integer|min:1', 
             'user_id' => 'required|integer|min:1', 
             'created_at' => 'required|date',
