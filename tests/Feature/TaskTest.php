@@ -29,6 +29,7 @@ class TaskTest extends TestCase
         $status = Status::factory()->create();
 
         $response = $this->postJson('/api/task', [
+            'task_title' => 'Title',
             'task_definition' => 'Do homework',
             'status_id' => $status->id,
             'user_id' => $user->id
@@ -44,6 +45,7 @@ class TaskTest extends TestCase
         $status = Status::factory()->create();
 
         Task::factory()->create([
+            'task_title' => 'Title',
             'task_definition' => 'Do homework',
             'status_id' => $status->id,
             'user_id' => $user->id
@@ -53,6 +55,7 @@ class TaskTest extends TestCase
         $status = Status::factory()->create(['status_code' => 'Complete']);
 
         Task::factory()->create([
+            'task_title' => 'Title',
             'task_definition' => 'Go to extra class',
             'status_id' => $status->id,
             'user_id' => $user->id
@@ -62,7 +65,7 @@ class TaskTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonCount(2)
-            ->assertJsonStructure(['*' => ['task_definition', 'status_id', 'user_id']]);
+            ->assertJsonStructure(['*' => ['task_title', 'task_definition', 'status_id', 'user_id']]);
 
         $this->assertCount(2, Task::all());
     }
@@ -73,6 +76,7 @@ class TaskTest extends TestCase
         $status = Status::factory()->create();
 
         Task::factory()->create([
+            'task_title' => 'Title',
             'task_definition' => 'Do homework',
             'status_id' => $status->id,
             'user_id' => $user->id
@@ -82,6 +86,7 @@ class TaskTest extends TestCase
         $status = Status::factory()->create(['status_code' => 'Complete']);
 
         $complete_task = Task::factory()->create([
+            'task_title' => 'Title',
             'task_definition' => 'Go to extra class',
             'status_id' => $status->id,
             'user_id' => $user->id
@@ -99,6 +104,7 @@ class TaskTest extends TestCase
         $status = Status::factory()->create(['status_code' => 'Complete']);
 
         $complete_task = Task::factory()->create([
+            'task_title' => 'Title',
             'task_definition' => 'Go to extra class',
             'status_id' => $status->id,
             'user_id' => $user->id
