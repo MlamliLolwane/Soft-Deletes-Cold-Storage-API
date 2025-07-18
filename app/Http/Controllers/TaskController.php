@@ -84,7 +84,7 @@ class TaskController extends Controller
 
     public function permanently_delete(string $id): JsonResponse
     {
-        $deleted_task = Task::withTrashed()->where('id', $id)->firstOrFail();
+        $deleted_task = Task::onlyTrashed()->where('id', $id)->firstOrFail();
 
         $data = [
             'id' => $deleted_task->id,
