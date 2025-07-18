@@ -66,6 +66,13 @@ class TaskController extends Controller
         return response()->json(['message' => 'Status deleted successfully'], 204);
     }
 
+    public function trashed(): JsonResponse
+    {
+        $status = ArchivedStatus::onlyTrashed()->get();
+
+        return response()->json($status, 200);
+    }
+
     public function restore(string $id): JsonResponse
     {
         $deleted_task = Task::withTrashed()->where('id', $id)->firstOrFail();
