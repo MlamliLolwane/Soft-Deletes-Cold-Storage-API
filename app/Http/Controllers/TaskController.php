@@ -68,7 +68,7 @@ class TaskController extends Controller
 
     public function trashed(): JsonResponse
     {
-        $status = ArchivedStatus::onlyTrashed()->get();
+        $status = Task::onlyTrashed()->get();
 
         return response()->json($status, 200);
     }
