@@ -13,10 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-<<<<<<< HEAD
         Status::create(['status_code' => 'Pending']);
-=======
-        
->>>>>>> b98ea935e3d10aad98f7883402d6443742e9204b
     }
 }
