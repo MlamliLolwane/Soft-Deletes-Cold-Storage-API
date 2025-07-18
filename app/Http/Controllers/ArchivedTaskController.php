@@ -16,7 +16,7 @@ class ArchivedTaskController extends Controller
      */
     public function index()
     {
-        $task = ArchivedTask::withTrashed()->get();
+        $task = ArchivedTask::onlyTrashed()->get();
 
         return response()->json($task, 200);
     }
@@ -36,7 +36,7 @@ class ArchivedTaskController extends Controller
      */
     public function permanently_delete(string $id)
     {
-        $task = ArchivedTask::withTrashed()->where('id', $id)->firstOrFail();
+        $task = ArchivedTask::onlyTrashed()->where('id', $id)->firstOrFail();
 
         $task->forceDelete();
 
@@ -45,7 +45,7 @@ class ArchivedTaskController extends Controller
 
     public function restore(string $id)
     {
-        $task = ArchivedTask::withTrashed()->where('id', $id)->firstOrFail();
+        $task = ArchivedTask::onlyTrashed()->where('id', $id)->firstOrFail();
 
         if(\App\Models\Task::find($task->id))
         {
