@@ -13,6 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Status::factory()->create();
+        Status::create(['status' => 'Pending');
     }
 }
