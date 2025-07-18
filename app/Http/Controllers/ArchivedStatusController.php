@@ -16,7 +16,7 @@ class ArchivedStatusController extends Controller
      */
     public function index(): JsonResponse
     {
-        $status = ArchivedStatus::withTrashed()->get();
+        $status = ArchivedStatus::onlyTrashed()->get();
 
         return response()->json($status, 200);
     }
@@ -26,7 +26,7 @@ class ArchivedStatusController extends Controller
      */
     public function show(string $id): JsonResponse
     {
-        $archived_status = ArchivedStatus::withTrashed()->where('id', $id)->firstOrFail();
+        $archived_status = ArchivedStatus::onlyTrashed()->where('id', $id)->firstOrFail();
 
 
         return response()->json($archived_status, 200);
@@ -34,7 +34,7 @@ class ArchivedStatusController extends Controller
 
     public function restore(string $id): JsonResponse
     {
-        $archived_status = ArchivedStatus::withTrashed()->where('id', $id)->firstOrFail();
+        $archived_status = ArchivedStatus::onlyTrashed()->where('id', $id)->firstOrFail();
 
         // Check if the ID is already used in statuses table
         if (\App\Models\Status::find($archived_status->id)) {
@@ -58,7 +58,7 @@ class ArchivedStatusController extends Controller
 
     public function permanently_delete(string $id): JsonResponse
     {
-        $status = ArchivedStatus::withTrashed()->where('id', $id)->firstOrFail();
+        $status = ArchivedStatus::onlyTrashed()->where('id', $id)->firstOrFail();
 
         $status->forceDelete();
 
