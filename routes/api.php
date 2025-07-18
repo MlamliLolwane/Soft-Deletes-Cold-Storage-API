@@ -19,6 +19,7 @@ Route::delete('/status/permanent/delete/{id}', [StatusController::class, 'perman
 
 Route::apiResource('task', TaskController::class);
 Route::put('/task/restore/{id}', [TaskController::class, 'restore']);
+Route::put('/task/trashed', [TaskController::class, 'trashed']);
 Route::delete('/task/permanent/delete/{id}', [TaskController::class, 'permanently_delete']);
 
 
