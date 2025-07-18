@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         Status::create(['status_code' => 'Pending']);
         User::create(
-            ['name' => 'Mlamli Lolwane', 'email' => 'mrlolwane96@gmail.com', 'passwprd' => 'testpassword']);
+            ['name' => 'Mlamli Lolwane', 'email' => 'mrlolwane96@gmail.com', 'password' => 'testpassword']);
     }
 }
